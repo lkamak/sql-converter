@@ -5,7 +5,7 @@ from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-load_dotenv()
+load_dotenv(dotenv_path="/home/agentk/Documents/augment-projects/nl-to-sql/.env")
 
 class SQL_Converter:
     def __init__(self, db_path="northwind-SQLite3/dist/northwind.db"):
@@ -13,9 +13,13 @@ class SQL_Converter:
 
         self.db_schema = get_database_schema(self.db_path)
 
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not api_key:
+            print("Warning: ANTHROPIC_API_KEY not found in environment")
+
         self.llm = ChatAnthropic(
             model="claude-3-5-sonnet-20241022",
-            api_key=os.getenv("ANTHROPIC_API_KEY"), 
+            api_key=api_key, 
             temperature=0
         )
 
@@ -69,6 +73,8 @@ SQL: SELECT d.name, COUNT(e.id) as employee_count, d.budget
 
 if __name__ == "__main__":
 
+    load_dotenv(dotenv_path="/home/agentk/Documents/augment-projects/nl-to-sql/.env")
+
     """unittest for SQL_Converter"""
 
     sql_converter = SQL_Converter()
@@ -77,7 +83,7 @@ if __name__ == "__main__":
     print(sql_query)
 
     """unittest for query_database"""
-    
+
     result = query_database(sql_query)
     print(result)
 
