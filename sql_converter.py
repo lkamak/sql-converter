@@ -31,7 +31,7 @@ class SQL_Converter:
         self.llm_chain = self.prompt_template | self.llm | StrOutputParser()
 
     def _get_system_prompt(self) -> str:
-        return """You are an expert SQL generator. Convert natural language queries to SQL based on the provided database schema.
+        return """You are an expert PLSQL generator. Convert natural language queries to SQL based on the provided database schema.
 
 Rules:
 1. Generate ONLY the SQL query, no explanations or markdown formatting

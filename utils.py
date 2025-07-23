@@ -75,4 +75,3 @@ if __name__ == "__main__":
     """unittest for get_database_schema"""
     schema = get_database_schema("northwind-SQLite3/dist/northwind.db")
     print(schema)
-

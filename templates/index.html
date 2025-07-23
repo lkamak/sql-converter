@@ -98,5 +98,17 @@
         </div>
     </div>
     {% endif %}
+
+    {% if results %}
+    <div class="container">
+        <div class="result">
+            <form method="POST" action="/download_csv">
+                <input type="hidden" name="sql_query" value="{{ sql_query }}">
+                <button type="submit">Download CSV</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
 </body>
 </html>
