@@ -1,6 +1,5 @@
 import sqlite3
 import json
-import pandas as pd
 
 def query_database(sql_query, db_path="northwind-SQLite3/dist/northwind.db"):
     """
@@ -65,28 +64,6 @@ def get_database_schema(db_path):
     
     finally:
         conn.close()
-
-def export_results_to_csv(results, filename=None):
-    """
-    Export query results to CSV format.
-    
-    Args:
-        results (dict): Query results with 'columns' and 'data' keys
-        filename (str, optional): If provided, saves to file. Otherwise returns CSV string.
-    
-    Returns:
-        str: CSV content as string, or file path if saved
-    """
-    if not results.get('data'):
-        return "No data to export"
-    
-    df = pd.DataFrame(results['data'], columns=results['columns'])
-    
-    if filename:
-        df.to_csv(filename, index=False)
-        return filename
-    else:
-        return df.to_csv(index=False)
 
 if __name__ == "__main__":
 
