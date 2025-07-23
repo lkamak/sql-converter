@@ -77,6 +77,7 @@ if __name__ == "__main__":
     print(sql_query)
 
     """unittest for query_database"""
+    
     result = query_database(sql_query)
     print(result)
 

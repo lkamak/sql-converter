@@ -1,7 +1,9 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
+import tempfile
+import os
 
 from sql_converter import SQL_Converter
-from utils import query_database
+from utils import query_database, export_results_to_csv
 
 app = Flask(__name__)
 
@@ -33,6 +35,20 @@ def run_query():
         return jsonify({"results": results})
     else:
         return render_template("index.html", results=results, sql_query=sql_query)
+
+@app.route("/export_csv", methods=["POST"])
+def export_csv():
+    sql_query = request.form["sql_query"]
+    
+    results = query_database(sql_query)
+    
+    # Create temporary file
+    temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False)
+    csv_content = export_results_to_csv(results)
+    temp_file.write(csv_content)
+    temp_file.close()
+    
+    return send_file(temp_file.name, as_attachment=True, download_name='query_results.csv')
 
 if __name__ == "__main__":
     app.run(debug=True)
